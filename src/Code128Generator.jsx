@@ -4,7 +4,7 @@ import JsBarcode from "jsbarcode";
 export default function Code128Generator() {
   const [value, setValue] = useState("1234567890");
   const [barWidth, setBarWidth] = useState(2);
-  const [height, setHeight] = useState(80);
+  const [height, setHeight] = useState(55);
 
   const [labelText, setLabelText] = useState("");
   const [labelPosition, setLabelPosition] = useState("below"); // above | below | left | right
@@ -285,22 +285,63 @@ export default function Code128Generator() {
         padding: 24,
       }}
     >
-      <style>{`
-        @media print {
-          body { margin: 0; }
-          body * { visibility: hidden !important; }
-          .barcode-print-area, .barcode-print-area * { visibility: visible !important; }
-          .barcode-print-area {
-            position: fixed !important;
-            left: 0 !important;
-            top: 0 !important;
-          }
-          .barcode-preview {
-            border: none !important;
-            padding: 0 !important;
-          }
+    <style>{`
+      @page {
+        size: 2in 1in;
+        margin: 0;
+      }
+
+      @media print {
+        html, body {
+          width: 2in;
+          height: 1in;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
         }
-      `}</style>
+
+        body * {
+          visibility: hidden !important;
+        }
+
+        .barcode-print-area,
+        .barcode-print-area * {
+          visibility: visible !important;
+        }
+
+        .barcode-print-area {
+          position: fixed !important;
+          left: 0 !important;
+          top: 0 !important;
+          width: 2in !important;
+          height: 1in !important;
+          display: flex !important;
+          justify-content: center !important;
+          align-items: center !important;
+          overflow: hidden !important;
+          background: white !important;
+        }
+
+        .barcode-preview {
+          border: none !important;
+          border-radius: 0 !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          width: 100% !important;
+          height: 100% !important;
+          display: flex !important;
+          justify-content: center !important;
+          align-items: center !important;
+        }
+
+        .barcode-preview svg {
+          width: 1.95in !important;
+          height: 0.95in !important;
+          max-width: 100% !important;
+          max-height: 100% !important;
+        }
+      }
+    `}</style>
 
       <div className="no-print">
         <h2 style={{ margin: "0 0 12px 0" }}>Code-128 Barcode Generator</h2>
